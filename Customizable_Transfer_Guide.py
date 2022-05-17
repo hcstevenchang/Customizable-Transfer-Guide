@@ -235,7 +235,7 @@ def newprice(contentline,routeprice):
                 edgeset.add(stop['edge'])
             route['summary']['price']=totalprice if totalprice else 0        
     return contentline
-def fasterarrivaltime(fromstop,tostop,timestamp,offset):
+def fasterarrivaltime(fromstop,tostop,timestamp,offset,transfer_time):
     contentline=traintime(fromstop,tostop,timestamp,offset)
     timestamp2=datetime.datetime.strptime(str(timestamp)[:10]+' '+min([item['summary']['arrival'] for item in contentline]),'%Y-%m-%d %H:%M')
     contentline=contentline+traintime(fromstop,tostop,timestamp2,-1)
@@ -248,7 +248,7 @@ def fasterarrivaltime(fromstop,tostop,timestamp,offset):
         contentline2.append(dict(summary=route['summary'],route=featurelist))
     count=len(contentline2)
     stoplist,routeset=list(),set()
-    trfoffset=2
+    trfoffset=transfer_time
     summaryset=set([','.join([str(value) for key,value in item['summary'].items()]) for item in contentline2])
     routeitem,routeprice=routeposition(contentline2)
     for r,route in enumerate(contentline2):
@@ -339,7 +339,7 @@ def fasterarrivaltime(fromstop,tostop,timestamp,offset):
             #print()
     newcontentline=newprice(newcontentline,routeprice)
     return newcontentline
-def fasterdeparturetime(fromstop,tostop,timestamp,offset):
+def fasterdeparturetime(fromstop,tostop,timestamp,offset,transfer_time):
     contentline=traintime(fromstop,tostop,timestamp,offset,'departure')
     timestamp2=datetime.datetime.strptime(str(timestamp)[:10]+' '+max([item['summary']['departure'] for item in contentline]),'%Y-%m-%d %H:%M')
     contentline=contentline+traintime(fromstop,tostop,timestamp2,1,'departure')
@@ -352,7 +352,7 @@ def fasterdeparturetime(fromstop,tostop,timestamp,offset):
         contentline2.append(dict(summary=route['summary'],route=featurelist))
     count=len(contentline2)
     stoplist,routeset=list(),set()
-    trfoffset=2
+    trfoffset=transfer_time
     summaryset=set([','.join([str(value) for key,value in item['summary'].items()]) for item in contentline2])
     routeitem,routeprice=routeposition(contentline2)
     for r,route in enumerate(contentline2):
@@ -441,17 +441,17 @@ def fasterdeparturetime(fromstop,tostop,timestamp,offset):
             #print()
     newcontentline=newprice(newcontentline,routeprice)
     return newcontentline
-def fastertime(fromstop: str,tostop: str,timestamp: datetime.datetime,offset: int,type: str='arrival') -> list:
+def fastertime(fromstop: str,tostop: str,timestamp: datetime.datetime = datetime.datetime.now(),offset: int = 0,transfer_time: int = 2,type: str='arrival') -> list:
     if type=='arrival':
-        return fasterarrivaltime(fromstop,tostop,timestamp,offset)
+        return fasterarrivaltime(fromstop,tostop,timestamp,offset,transfer_time)
     elif type=='departure':
-        return fasterdeparturetime(fromstop,tostop,timestamp,offset)
+        return fasterdeparturetime(fromstop,tostop,timestamp,offset,transfer_time)
     else:
         return traintime(fromstop,tostop,timestamp,offset,type)
 def main():
     #timestamp=datetime.datetime.now()
     timestamp=datetime.datetime.strptime('2022-06-17 10:00','%Y-%m-%d %H:%M')
-    for line in writetimeline(fastertime('高円寺','池袋',timestamp,0)):
+    for line in writetimeline(fastertime('高円寺','池袋',timestamp,0,10)):
         print(line)
 
 if __name__ == "__main__":

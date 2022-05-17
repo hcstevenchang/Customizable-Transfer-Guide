@@ -4,10 +4,60 @@ This is a Transfer Guide (乗換案内) for Japan with a customizable transfer t
 
 ## Description
 
-* Extracted train time table data from the train schedule website (Yahoo!路線情報).
+* Extracted train time table data from the train schedule website ([Yahoo!路線情報](https://transit.yahoo.co.jp/)).
 * Created an algorithm for transfer guide with  customizable transfer time.
 
-## Result
+## Main Function
+```python
+def fastertime(fromstop: str,tostop: str,timestamp: datetime.datetime = datetime.datetime.now(),offset: int = 0,transfer_time: int = 2,type: str='arrival') -> list:
+    if type=='arrival':
+        return fasterarrivaltime(fromstop,tostop,timestamp,offset,transfer_time)
+    elif type=='departure':
+        return fasterdeparturetime(fromstop,tostop,timestamp,offset,transfer_time)
+```
+
+#### Parameters
+- `fromstop`
+
+    (string) The departure station.
+
+    Default: nothing
+
+- `tostop`
+
+    (string) The arrival station.
+
+    Default: nothing
+
+- `timestamp`
+
+    (datetime.datetime) the departure time of the train or the arrival time to the destination depends on the [`type`](#type).
+
+    Default: `datetime.datetime.now()`
+
+- `transfer_time`
+
+    (int) the custom transfer_time in minutes.
+
+    Default: `2`
+
+- `offset`
+
+    (int) the offset minutes before([`offset`](#offset)<0)/after [`timestamp`](#timestamp).
+
+    Default: `0`
+
+- `type`
+
+    (string) choose departure time or arrival time.
+    `'arrival'`: the arrival time to the destination.
+    `'departure'`: the departure time from the departure station.
+
+    Default: `'arrival'`
+
+To see the list of station names, visit: [駅情報](https://transit.yahoo.co.jp/station)
+
+## Example:
 
 ```python
 import datetime
@@ -18,6 +68,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
 
 #### Output
 ```text
@@ -38,3 +89,4 @@ Route.2️⃣9:39→09:56 (17分) trf:1 420
 09:52発 高田馬場 1
 ⬇️4分 🟩JR山手線外・池袋上野方面
 09:56着 池袋 7
+```
