@@ -1,11 +1,11 @@
 ﻿# Customizable_Transfer_Guide
 
-This is a Transfer Guide (乗換案内) for Japan with a customizable transfer time
+This is a Transfer Guide (乗換案内) for Japan with a customizable transfer time.
 
 ## Description
 
 * Extracted train time table data from the train schedule website ([Yahoo!路線情報](https://transit.yahoo.co.jp/)).
-* Created an algorithm for transfer guide with  customizable transfer time.
+* Created an algorithm for transfer guide with customizable transfer time.
 
 ## Main Function
 ```python
@@ -24,46 +24,7 @@ def fastertime(fromstop: str,tostop: str,timestamp: datetime.datetime = datetime
 |timestamp|datetime.datetime|datetime.datetime.now()|the departure time of the train or the arrival time to the destination depends on the [`type`](#type).
 |transfer_time|integer|2|the custom transfer_time in minutes.
 |offset|integer|0|the offset minutes before([`offset`](#offset)<0) or after [`timestamp`](#timestamp).
-|type|string|'arrival'|choose departure time or arrival time.
-    `'arrival'`: the arrival time to the destination.
-    `'departure'`: the departure time from the departure station.
-- `fromstop`
-
-    (string) The departure station.
-
-    Default: nothing
-
-- `tostop`
-
-    (string) The arrival station.
-
-    Default: nothing
-
-- `timestamp`
-
-    (datetime.datetime) the departure time of the train or the arrival time to the destination depends on the [`type`](#type).
-
-    Default: `datetime.datetime.now()`
-
-- `transfer_time`
-
-    (int) the custom transfer_time in minutes.
-
-    Default: `2`
-
-- `offset`
-
-    (int) the offset minutes before([`offset`](#offset)<0) or after [`timestamp`](#timestamp).
-
-    Default: `0`
-
-- `type`
-
-    (string) choose departure time or arrival time.
-    `'arrival'`: the arrival time to the destination.
-    `'departure'`: the departure time from the departure station.
-
-    Default: `'arrival'`
+|type|string|'arrival'|choose departure time or arrival time.    `'arrival'`: the arrival time to the destination.   `'departure'`: the departure time from the departure station.
 
 To see the list of station names, visit: [駅情報](https://transit.yahoo.co.jp/station)
 
