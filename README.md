@@ -43,7 +43,7 @@ def fastertime(fromstop: str,tostop: str,timestamp: datetime.datetime = datetime
 
 - `offset`
 
-    (int) the offset minutes before([`offset`](#offset)<0)/after [`timestamp`](#timestamp).
+    (int) the offset minutes before([`offset`](#offset)<0) or after [`timestamp`](#timestamp).
 
     Default: `0`
 
@@ -61,6 +61,11 @@ To see the list of station names, visit: [駅情報](https://transit.yahoo.co.jp
 
 ```python
 import datetime
+def fastertime(fromstop: str,tostop: str,timestamp: datetime.datetime = datetime.datetime.now(),offset: int = 0,transfer_time: int = 2,type: str='arrival') -> list:
+    if type=='arrival':
+        return fasterarrivaltime(fromstop,tostop,timestamp,offset,transfer_time)
+    elif type=='departure':
+        return fasterdeparturetime(fromstop,tostop,timestamp,offset,transfer_time)
 def main():
     timestamp=datetime.datetime.strptime('2022-06-17 10:00','%Y-%m-%d %H:%M')
     for line in writetimeline(fastertime('高円寺','池袋',timestamp,0)):
@@ -72,7 +77,7 @@ if __name__ == "__main__":
 
 #### Output
 ```text
-Route.1️⃣9:44→09:59 (15分) trf:1 220
+Route.1️⃣ 09:44→09:59 (15分) trf:1 ¥220
 09:44発 高円寺 4 前/中/後
 ⬇️6分 🀄JR中央線・東京行
 09:50着 新宿 8
@@ -81,7 +86,7 @@ Route.1️⃣9:44→09:59 (15分) trf:1 220
 ⬇️5分 🟧JR湘南新宿ライン・古河行
 09:59着 池袋 3
 
-Route.2️⃣9:39→09:56 (17分) trf:1 420
+Route.2️⃣ 09:39→09:56 (17分) trf:1 ¥420
 09:39発 高円寺 2 中/後
 ⬇️8分 Ⓜ️Metro東西線・東葉勝田台行
 09:47着 高田馬場 1
