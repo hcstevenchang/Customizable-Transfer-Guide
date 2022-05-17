@@ -16,7 +16,17 @@ def fastertime(fromstop: str,tostop: str,timestamp: datetime.datetime = datetime
         return fasterdeparturetime(fromstop,tostop,timestamp,offset,transfer_time)
 ```
 
-#### Parameters
+#### Arguments
+| Parameter           | Type      | Default       | Description   |	
+| :-------------------|:---------:|:-------------:| :-------------|
+|fromstop|string|nothing| The departure station.
+|tostop|string|nothing| The arrival station.
+|timestamp|datetime.datetime|datetime.datetime.now()|the departure time of the train or the arrival time to the destination depends on the [`type`](#type).
+|transfer_time|integer|2|the custom transfer_time in minutes.
+|offset|integer|0|the offset minutes before([`offset`](#offset)<0) or after [`timestamp`](#timestamp).
+|type|string|'arrival'|choose departure time or arrival time.
+    `'arrival'`: the arrival time to the destination.
+    `'departure'`: the departure time from the departure station.
 - `fromstop`
 
     (string) The departure station.
