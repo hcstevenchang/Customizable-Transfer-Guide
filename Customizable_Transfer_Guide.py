@@ -449,8 +449,9 @@ def fastertime(fromstop: str,tostop: str,timestamp: datetime.datetime,offset: in
     else:
         return traintime(fromstop,tostop,timestamp,offset,type)
 def main():
-    timestamp=datetime.datetime.now()
-    for line in writetimeline(fastertime('高円寺','池袋',timestamp,-18)):
+    #timestamp=datetime.datetime.now()
+    timestamp=datetime.datetime.strptime('2022-06-17 10:00','%Y-%m-%d %H:%M')
+    for line in writetimeline(fastertime('高円寺','池袋',timestamp,0)):
         print(line)
 
 if __name__ == "__main__":
