@@ -1,6 +1,11 @@
 ﻿# Customizable_Transfer_Guide
-
+<table>
+<tr>
+<td>
 This is a Transfer Guide (乗換案内) for Japan with a customizable transfer time.
+</td>
+</tr>
+</table>
 
 ## Description
 
